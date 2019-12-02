@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe Project</title>
+    <style>
+        .box{
+            width: 60px;
+            height: 60px;
+        }
+    </style>
+
+    <script>
+//start() is just the state I want the game at when you load the page
+        function start(){
+            document.turn = "X";
+        }
+//next() is a function meant to show the text in the box (x or o)
+        function next(box){
+            box.innerText = document.turn;
+            switchPlayer();
+        }
+//switchPlayer() is used to cycle to the other player after one player goes
+        function switchPlayer(){
+            if(document.turn == "X"){
+                document.turn = "O";
+            }
+            else{
+                document.turn = "X";
+            }
+        }
+
+    </script>
+</head>
+<body onload="start();">
+    <h1>Prototype Tic Tac Toe</h1>
+
+        <table border="1">
+            <tr>
+                <td class="box" onclick="next(this)"></td>
+                <td class="box" onclick="next(this)"></td>
+                <td class="box" onclick="next(this)"></td>
+            </tr>
+            <tr>
+                <td class="box" onclick="next(this)"></td>
+                <td class="box" onclick="next(this)"></td>
+                <td class="box" onclick="next(this)"></td>
+            </tr>
+            <tr>
+                <td class="box" onclick="next(this)"></td>
+                <td class="box" onclick="next(this)"></td>
+                <td class="box" onclick="next(this)"></td>
+            </tr>
+        </table>
+
+</body>
+</html>
