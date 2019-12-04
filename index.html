@@ -14,42 +14,92 @@
 //start() is just the state I want the game at when you load the page
         function start(){
             document.turn = "X";
+            document.win = null;
+
+            setMessage(document.turn + " goes first.");
         }
 //next() is a function meant to show the text in the box (x or o)
         function next(box){
-            box.innerText = document.turn;
-            switchPlayer();
+            if(document.win != null){
+                setMessage(document.turn + " has won. Get over it!!!");
+            }
+            else if(box.innerText == "") {
+                box.innerText = document.turn;
+                switchPlayer();
+            }
+            else{
+                setMessage("You can't use that square.");
+            }
         }
 //switchPlayer() is used to cycle to the other player after one player goes
         function switchPlayer(){
-            if(document.turn == "X"){
+            if(winner(document.turn)){
+            setMessage(document.turn + " Wins!!!");
+            document.win = document.turn;
+            }
+
+            else if(document.turn == "X"){
                 document.turn = "O";
+                setMessage("It's " + document.turn + "'s turn to go.");
             }
             else{
                 document.turn = "X";
+                setMessage("It's " + document.turn + "'s turn to go.");
             }
+        }
+
+        function setMessage(x){
+            document.getElementById("message").innerText = x;
+        }
+
+        function checkForWin(x, y, z, move){
+            var win = false;
+
+            if(getSquare(x) == move && getSquare(y) == move && getSquare(z) == move){
+                win = true;
+            }
+            return win;
+        }
+
+        function getSquare(num){
+            return document.getElementById("b" + num).innerText;
+        }
+
+        function winner(move){
+            var result = false;
+            if(checkForWin(1,2,3,move) ||
+                checkForWin(4,5,6,move) ||
+                checkForWin(7,8,9,move) ||
+                checkForWin(1,4,7,move) ||
+                checkForWin(2,5,8,move) ||
+                checkForWin(3,6,9,move) ||
+                checkForWin(1,5,9,move) ||
+                checkForWin(3,5,7,move)){
+                result = true;
+            }
+            return result;
         }
 
     </script>
 </head>
 <body onload="start();">
     <h1>Prototype Tic Tac Toe</h1>
-
+        <div id="message">Player's Turn Goes Here.</div>
         <table border="1">
             <tr>
-                <td class="box" onclick="next(this)"></td>
-                <td class="box" onclick="next(this)"></td>
-                <td class="box" onclick="next(this)"></td>
+                <td id="b1" class="box" onclick="next(this)"></td>
+                <td id="b2" class="box" onclick="next(this)"></td>
+                <td id="b3" class="box" onclick="next(this)"></td>
             </tr>
             <tr>
-                <td class="box" onclick="next(this)"></td>
-                <td class="box" onclick="next(this)"></td>
-                <td class="box" onclick="next(this)"></td>
+                <td id="b4" class="box" onclick="next(this)"></td>
+                <td id="b5" class="box" onclick="next(this)"></td>
+                <td id="b6" class="box" onclick="next(this)"></td>
             </tr>
             <tr>
-                <td class="box" onclick="next(this)"></td>
-                <td class="box" onclick="next(this)"></td>
-                <td class="box" onclick="next(this)"></td>
+                <td id="b7" class="box" onclick="next(this)"></td>
+                <td id="b8" class="box" onclick="next(this)"></td>
+                <td id="b9" class="box" onclick="next(this)"></td>
             </tr>
         </table>
 
