@@ -7,13 +7,23 @@
         .box{
             width: 60px;
             height: 60px;
+            text-align: center;
+            font-weight: bold;
         }
     </style>
 
     <script>
 //start() is just the state I want the game at when you load the page
         function start(){
+            for(var x = 1; x <= 9; x = x + 1){
+                clearSquare(x);
+            }
+
             document.turn = "X";
+            if(Math.random() < 0.5){
+                document.turn = "O";
+            }
+
             document.win = null;
 
             setMessage(document.turn + " goes first.");
@@ -80,6 +90,10 @@
             return result;
         }
 
+        function clearSquare(number){
+            document.getElementById("b" + number).innerText = "";
+        }
+
     </script>
 </head>
 <body onload="start();">
@@ -102,6 +116,6 @@
                 <td id="b9" class="box" onclick="next(this)"></td>
             </tr>
         </table>
-
+    <button type="button" onclick="start()">Clear</button>
 </body>
 </html>
