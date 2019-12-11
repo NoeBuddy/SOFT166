@@ -20,7 +20,8 @@
     </script>
 
     <script>
-
+var a = 1;
+var b = 4;
 //start() is just the state I want the game at when you load the page
         function start(){
             for(var x = 1; x <= 9; x = x + 1){
@@ -36,6 +37,17 @@
 
             setMessage(document.turn + " goes first.");
         }
+
+        function newGame(){
+            for(var lights = 1; lights <= 6; lights = lights + 1){
+                getLightURI(lights);
+                getLightState(lights);
+            }
+            a = 1;
+            b = 4;
+            start();
+        }
+
 //next() is a function meant to show the text in the box (x or o)
         function next(box){
             if(document.win != null){
@@ -54,6 +66,17 @@
             if(winner(document.turn)){
             setMessage(document.turn + " Wins!!!");
             document.win = document.turn;
+
+            if(document.turn == "X" && a <= 3){
+                getLightURI(a);
+                togglelight(a);
+                a = a + 1;
+            }
+            else{
+                getLightURI(b);
+                togglelight(b);
+                b = b + 1;
+            }
             }
 
             else if(document.turn == "X"){
@@ -104,6 +127,59 @@
 
         }
 
+function getLightURI(number)
+{
+    var IP = "http://192.168.0.50/api/";
+    var username = "stlaB2I6VZ8O80Qepc-1xfmLrHgyTFvB9IGupaQz";
+    var lights = "/lights/";
+    var URI = IP + username + lights;
+    return URI + number +"/";
+}
+
+function togglelight(number)
+{
+    var getState = $.getJSON(getLightURI(number), function (data)
+    {
+        var state = data["state"]["on"];
+        if (state)
+        {
+            state = false;
+        }
+        else
+        {
+            state = true;
+        }
+
+        var lightState = {"on" : state};
+
+        $.ajax({
+            url: getLightURI(number) + "state/",
+            type: "PUT",
+            data: JSON.stringify(lightState)
+        })
+    });
+}
+
+function getLightState(number){
+    var getState = $.getJSON(getLightURI(number), function (data) {
+        var state = data["state"]["on"];
+        if (state) {
+            state = false;
+            var lightState = {"on" : state};
+
+            $.ajax({
+                url: getLightURI(number) + "state/",
+                type: "PUT",
+                data: JSON.stringify(lightState)
+            })
+        }
+        else {
+            state = true;
+        }
+    });
+
+}
+
     </script>
 </head>
 <body onload="start();">
@@ -127,5 +203,6 @@
             </tr>
         </table>
     <button type="button" onclick="start()">Clear</button>
+    <button type="button" onclick="newGame()">New Game</button>
 </body>
 </html>

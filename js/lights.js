@@ -9,18 +9,18 @@ function checkWin(element)
     return winner;
 };
 
-function getLightURI(element)
+function getLightURI(number)
 {
     var IP = "http://192.168.0.50/api/";
     var username = "stlaB2I6VZ8O80Qepc-1xfmLrHgyTFvB9IGupaQz";
     var lights = "/lights/";
     var URI = IP + username + lights;
-    return URI + element.attr("id")+"/";
+    return URI + number +"/";
 }
 
-function togglelight(element)
+function togglelight(number)
 {
-    var getState = $.getJSON(getLightURI(element), function (data)
+    var getState = $.getJSON(getLightURI(number), function (data)
     {
         var state = data["state"]["on"];
         if (state)
@@ -35,7 +35,7 @@ function togglelight(element)
         var lightState = {"on" : state};
 
         $.ajax({
-            url: getLightURI(element) + "state/",
+            url: getLightURI(number) + "state/",
             type: "PUT",
             data: JSON.stringify(lightState)
         })
