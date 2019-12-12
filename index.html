@@ -24,18 +24,29 @@ var a = 1;
 var b = 4;
 //start() is just the state I want the game at when you load the page
         function start(){
-            for(var x = 1; x <= 9; x = x + 1){
-                clearSquare(x);
+
+            if(a > 3){
+                setMessage("X has won the war!!!");
             }
 
-            document.turn = "X";
-            if(Math.random() < 0.5){
-                document.turn = "O";
+            else if(b > 6){
+                setMessage("O has won the war!!!")
             }
 
-            document.win = null;
+            else {
+                for (var x = 1; x <= 9; x = x + 1) {
+                    clearSquare(x);
+                }
 
-            setMessage(document.turn + " goes first.");
+                document.turn = "X";
+                if (Math.random() < 0.5) {
+                    document.turn = "O";
+                }
+
+                document.win = null;
+
+                setMessage(document.turn + " goes first.");
+            }
         }
 
         function newGame(){
@@ -69,11 +80,13 @@ var b = 4;
 
             if(document.turn == "X" && a <= 3){
                 getLightURI(a);
+                colorLight(a);
                 togglelight(a);
                 a = a + 1;
             }
             else{
                 getLightURI(b);
+                colorLight(b);
                 togglelight(b);
                 b = b + 1;
             }
@@ -158,6 +171,29 @@ function togglelight(number)
             data: JSON.stringify(lightState)
         })
     });
+}
+
+function colorLight(number)
+{
+    var getState = $.getJSON(getLightURI(number), function (data)
+    {
+        var state = data["state"]["hue"]
+        if(document.turn == "X"){
+
+            state = 0;
+        }
+        else{
+            state = 460;
+        }
+
+        var lightState = {"hue" : state};
+
+        $.ajax({
+            url: getLightURI(number) + "state/",
+            type: "PUT",
+            data: JSON.stringify(lightState)
+        })
+    })
 }
 
 function getLightState(number){
