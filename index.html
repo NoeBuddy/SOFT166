@@ -219,9 +219,9 @@ function getLightState(number){
     </script>
 </head>
 <body onload="start();">
-    <h1>Prototype Tic Tac Toe</h1>
-        <div id="message">Player's Turn Goes Here.</div>
-        <table border="1">
+    <h1 class="pageHead">Prototype Tic Tac Toe</h1>
+        <div class="message" id="message">Player's Turn Goes Here.</div>
+        <table border="1" align="center">
             <tr>
                 <td id="b1" class="box" onclick="next(this)"></td>
                 <td id="b2" class="box" onclick="next(this)"></td>
@@ -238,7 +238,16 @@ function getLightState(number){
                 <td id="b9" class="box" onclick="next(this)"></td>
             </tr>
         </table>
-    <button type="button" onclick="start()">Clear</button>
-    <button type="button" onclick="newGame()">New Game</button>
+    <div class="buttonHolder">
+        <button type="button" onclick="start()">Clear</button>
+        <button type="button" onclick="newGame()">New Game</button>
+    </div>
+
+<style>
+    .buttonHolder{text-align: center}
+    .pageHead{text-align: center}
+    .message{text-align: center}
+</style>
+
 </body>
 </html>
