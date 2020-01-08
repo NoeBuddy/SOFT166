@@ -1,2 +1,3 @@
-# SOFT166
-Web Development
+# SOFT166 Project: Jackson Maschman
+##Tic Tac Toe Project
+
