@@ -1,8 +1,9 @@
+//I use these variables to signify which lights to turn on when someone wins
 var a = 1;
 var b = 4;
 //start() is just the state I want the game at when you load the page
 function start(){
-//These parameters measure if one player has won three times
+//These parameters measure if one player has won three times. If not, then it clears the board.
     if(a > 3){
         setMessage("X has won the war!!!");
     }
@@ -15,7 +16,7 @@ function start(){
         for (var x = 1; x <= 9; x = x + 1) {
             clearSquare(x);
         }
-//Sets the player based on whose turn it is
+//Sets the player based on whose turn it is. Its math function makes it so it randomly selects X or O.
         document.turn = "X";
         if (Math.random() < 0.5) {
             document.turn = "O";
